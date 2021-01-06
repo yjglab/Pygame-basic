@@ -15,7 +15,7 @@ background = pygame.image.load("C:/JaeGyeong/github-repository/pygame/pygame-bas
 
 # 캐릭터(스프라이트) 불러오기
 character = pygame.image.load("C:/JaeGyeong/github-repository/pygame/pygame-basic/character.png")
-characterSize = character.get_rect().size # 이미지 크기를 구해옴. #get rectangle
+characterSize = character.get_rect().size # 이미지 크기를 구해옴. # (가로, 세로)
 characterWidth = characterSize[0]
 characterHeight = characterSize[1]
 characterXpos = (screen_width / 2) - (characterWidth / 2)
