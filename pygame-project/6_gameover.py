@@ -74,6 +74,12 @@ balls.append({
 weapon_to_remove = -1
 ball_to_remove = -1
 
+# Font , 타임, 결과 내용 정의
+game_font = pygame.font.Font(None, 40)
+total_time = 100
+start_ticks = pygame.time.get_ticks() # 시작시간 설정
+
+game_result = "Game Over!"
 
 running = True 
 while running:
@@ -174,14 +180,15 @@ while running:
                 ball_to_remove = ball_idx # 해당 공 없애기 위한 값 설정
                 
                 if ball_img_idx < 3:
+
                     # 현재 공 크기 정보
                     ball_width = ball_rect.size[0]
                     ball_height = ball_rect.size[1]
 
                     # 나눠진 공 정보
                     small_ball_rect = ball_images[ball_img_idx + 1].get_rect()
-                    small_ball_width = small_ball_rect.size[0]
-                    small_ball_height = small_ball_rect.size[1]
+                    small_ball_width = small_ball_rect[0]
+                    small_ball_height = small_ball_rect[1]
 
                     # 왼쪽으로 튕겨나가는 공
                     balls.append({
@@ -190,7 +197,7 @@ while running:
                         "img_idx": ball_img_idx + 1,
                         "to_x": -3,
                         "to_y": -6,
-                        "init_spd_y": ball_speed_y[ball_img_idx + 1]}) # ball_speed_y[1], [2], ...
+                        "init_spd_y": ball_speed_y[ball_img_idx + 1] }) # ball_speed_y[1], [2], ...
   
                     # 오른쪽으로 튕겨나가는 공
                     balls.append({
@@ -199,7 +206,7 @@ while running:
                         "img_idx": ball_img_idx + 1,
                         "to_x": +3,
                         "to_y": -6,
-                        "init_spd_y": ball_speed_y[ball_img_idx + 1]})
+                        "init_spd_y": ball_speed_y[ball_img_idx + 1] })
                 break
             
     # 충돌된 공 or 무기 없애기
@@ -211,6 +218,10 @@ while running:
         del weapons[weapon_to_remove]
         weapon_to_remove = -1
 
+    # 모든 공을 없앤 경우 종료 (성공)
+    if len(balls) == 0:
+        game_result = "Clear!"
+        running = False
     # 5. 화면에 그리기
     screen.blit(background, (0, 0))
     for weapon_x_pos, weapon_y_pos in weapons:
@@ -225,7 +236,21 @@ while running:
     screen.blit(stage, (0, screen_height - stage_height))
     screen.blit(character, (character_x_pos, character_y_pos))
 
+    # 경과 시간 계산
+    elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000
+    timer = game_font.render("Time : {}".format(int(total_time - elapsed_time)), True, (255, 255, 255))
+    screen.blit(timer, (10, 10))
+    
+    if total_time - elapsed_time <= 0:
+        game_result = "Time Over"
+        running = False
+
     pygame.display.update() # 화면 다시 그리기 (필수)       
 
-pygame.time.delay(50) 
+msg = game_font.render(game_result, True, (255, 255, 0))
+msg_rect = msg.get_rect(center=(int(screen_width / 2), int(screen_height / 2)))
+screen.blit(msg, msg_rect)
+pygame.display.update()
+
+pygame.time.delay(1800) 
 pygame.quit()
