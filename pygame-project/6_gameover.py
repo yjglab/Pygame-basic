@@ -83,7 +83,7 @@ game_result = "Game Over!"
 
 running = True 
 while running:
-    dt = clock.tick(40)
+    dt = clock.tick(50)
     
     # 2. 이벤트 처리 (키보드, 마우스)
     for event in pygame.event.get(): 
@@ -187,8 +187,8 @@ while running:
 
                     # 나눠진 공 정보
                     small_ball_rect = ball_images[ball_img_idx + 1].get_rect()
-                    small_ball_width = small_ball_rect[0]
-                    small_ball_height = small_ball_rect[1]
+                    small_ball_width = small_ball_rect.size[0]
+                    small_ball_height = small_ball_rect.size[1]
 
                     # 왼쪽으로 튕겨나가는 공
                     balls.append({
@@ -208,6 +208,9 @@ while running:
                         "to_y": -6,
                         "init_spd_y": ball_speed_y[ball_img_idx + 1] })
                 break
+        else: # 계속 게임 진행
+            continue # 안쪽 for문 조건 맞지 않으면 continue. 바깥 for문 계속 실행
+        break # 안쪽 for문에서 break시, 여기로 진입 . 2중 for문 한번에 탈출
             
     # 충돌된 공 or 무기 없애기
     if ball_to_remove > -1:
