@@ -36,7 +36,7 @@ character_y_pos = (screen_height - character_height - stage_height)
 
 # 캐릭터 이동 관련
 character_to_x = 0
-character_speed = 5
+character_speed = 6
 
 # 무기 제작
 weapon = pygame.image.load(os.path.join(image_path, "weapon.png"))
@@ -47,7 +47,7 @@ weapon_width = weapon_size[0]
 weapons = []
 
 # 무기 이동속도
-weapon_speed = 10
+weapon_speed = 14
 
 # 공 4개 제작 
 ball_images = [
@@ -57,7 +57,7 @@ ball_images = [
     pygame.image.load(os.path.join(image_path, "balloon4.png"))]
     
 # 공 크기에 따른 최초 속도
-ball_speed_y = [-18, -15, -12, -9]
+ball_speed_y = [-18, -15, -12, -10]
 
 # 공들
 balls = []
@@ -83,7 +83,7 @@ game_result = "Game Over!"
 
 running = True 
 while running:
-    dt = clock.tick(50)
+    dt = clock.tick(60)
     
     # 2. 이벤트 처리 (키보드, 마우스)
     for event in pygame.event.get(): 
